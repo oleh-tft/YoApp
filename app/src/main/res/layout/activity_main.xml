@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:padding="20dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#338B0000"
+        android:fontFamily="monospace"
+        android:padding="6dp"
+        android:rotation="-8"
+        android:text="CLASSIFIED // CASE #404"
+        android:textColor="#CC3333"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="monospace"
+        android:letterSpacing="0.1"
+        android:text="DAILY DEFUSING"
+        android:textAlignment="center"
+        android:textColor="#E0D8C8"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvStamp" />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="serif"
+        android:text="Тіні шепочуть. Годинник цокає."
+        android:textColor="#7A756C"
+        android:textSize="13sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <TextView
+        android:id="@+id/tvTimerDecor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="#080808"
+        android:fontFamily="monospace"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="04 : 59 : 99"
+        android:textColor="#B71C1C"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtitle" />
+
+    <GridLayout
+        android:id="@+id/gridContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:columnCount="8"
+        android:rowCount="8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTimerDecor" />
+
+    <Button
+        android:id="@+id/btnDefuse"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#8B1E1E"
+        android:fontFamily="monospace"
+        android:onClick="fun"
+        android:text="РОЗПОЧАТИ ОПЕРАЦІЮ"
+        android:textColor="#E0D8C8"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gridContainer" />
+
+    <Button
+        android:id="@+id/btnManual"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="#24221F"
+        android:fontFamily="monospace"
+        android:text="АРХІВ СХЕМ"
+        android:textColor="#B8AFA3"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDefuse" />
+
+    <Button
+        android:id="@+id/btnPhotoEditor"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="6dp"
+        android:backgroundTint="#47433E"
+        android:fontFamily="monospace"
+        android:text="РЕДАКТОР ФОТО"
+        android:textColor="#E0D8C8"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnManual" />
+
+    <!-- НОВИЙ БЛОК: Текстове поле -->
+    <EditText
+        android:id="@+id/etShareMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#5A534A"
+        android:fontFamily="monospace"
+        android:hint="Введіть текст для звіту..."
+        android:textColor="#E0D8C8"
+        android:textColorHint="#7A756C"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnPhotoEditor" />
+
+    <!-- НОВИЙ БЛОК: Кнопки вибору фото та поширення -->
+    <LinearLayout
+        android:id="@+id/layoutShare"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etShareMessage">
+
+        <Button
+            android:id="@+id/btnPickImageMain"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#3A3530"
+            android:fontFamily="monospace"
+            android:text="ОБРАТИ ФОТО"
+            android:textColor="#E0D8C8"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnShareMain"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#19558C"
+            android:fontFamily="monospace"
+            android:text="ПОШИРИТИ"
+            android:textColor="#E0D8C8"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="ВІДДІЛ ОСОБЛИВИХ РОЗСЛІДУВАНЬ • 1947"
+        android:textColor="#47433E"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

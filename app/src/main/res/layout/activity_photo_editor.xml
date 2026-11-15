@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:padding="16dp"
+    tools:context=".PhotoEditorActivity">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:text="SECRET PHOTO LAB 3.0"
+        android:textColor="#E0D8C8"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:background="#24221F"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/layoutTools"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <!-- Інструменти трансформації -->
+    <LinearLayout
+        android:id="@+id/layoutTools"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        app:layout_constraintBottom_toTopOf="@+id/layoutText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnRotate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#47433E"
+            android:text="ПОВОРОТ"
+            android:textColor="#E0D8C8"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnFlipH"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="2dp"
+            android:layout_marginStart="2dp"
+            android:layout_weight="1"
+            android:backgroundTint="#47433E"
+            android:text="ВІДЗЕРК. ↔"
+            android:textColor="#E0D8C8"
+            android:textSize="11sp" />
+
+        <Button
+            android:id="@+id/btnFlipV"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#47433E"
+            android:text="ВІДЗЕРК. ↕"
+            android:textColor="#E0D8C8"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- НОВИЙ БЛОК: Накладання тексту на фото -->
+    <LinearLayout
+        android:id="@+id/layoutText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/scrollFilters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/etWatermark"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="#5A534A"
+            android:fontFamily="monospace"
+            android:hint="Текст на фото..."
+            android:textColor="#E0D8C8"
+            android:textColorHint="#7A756C"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnAddText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#19558C"
+            android:text="НАКЛАСТИ"
+            android:textColor="#E0D8C8"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- Скролл з розширеними фільтрами -->
+    <HorizontalScrollView
+        android:id="@+id/scrollFilters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/btnLoad"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnFilterBW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3A3530"
+                android:text="ЧБ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterSepia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3A3530"
+                android:text="СЕПІЯ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterInvert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3A3530"
+                android:text="НЕГАТИВ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterHue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#8B1E1E"
+                android:text="HUE (ВІДТІНОК)"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterSaturate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3A3530"
+                android:text="НАСИЧЕНІСТЬ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterBright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:backgroundTint="#3A3530"
+                android:text="ЯСКРАВІСТЬ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnFilterContrast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#3A3530"
+                android:text="КОНТРАСТ"
+                android:textColor="#E0D8C8"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/btnLoad"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="#5A534A"
+        android:fontFamily="monospace"
+        android:text="ЗАВАНТАЖИТИ ДОКАЗ (ФОТО)"
+        android:textColor="#E0D8C8"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/layoutActions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/layoutActions"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#8B1E1E"
+            android:text="ЗБЕРЕГТИ"
+            android:textColor="#E0D8C8" />
+
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="#24221F"
+            android:text="ПОДІЛИТИСЯ"
+            android:textColor="#E0D8C8" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
