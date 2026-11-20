@@ -1,9 +1,12 @@
 package ua.tft.yoapp;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -19,6 +22,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText etShareMessage;
 
     private static final long START_TIME_IN_MILLIS = 300000;
+    private static final int REQUEST_POST_NOTIFICATIONS = 100;
+
+    // Щоб не запускати сервіс, коли просто відкриваємо PhotoEditor або галерею
+    private boolean isOpeningInternalScreen = false;
 
     // Лаунчер для вибору зображення
     private final ActivityResultLauncher<String> pickImageLauncher = registerForActivityResult(
@@ -59,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        requestNotificationPermissionIfNeeded();
 
         if (savedInstanceState == null) {
             myCat = new Cat("Мурзик", 3, "Рудий");
@@ -80,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         // Кнопка переходу в редактор
         Button btnPhotoEditor = findViewById(R.id.btnPhotoEditor);
         btnPhotoEditor.setOnClickListener(v -> {
+            isOpeningInternalScreen = true;
             Intent intent = new Intent(MainActivity.this, PhotoEditorActivity.class);
             startActivity(intent);
         });
@@ -87,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         // Кнопка вибору фото
         Button btnPickImageMain = findViewById(R.id.btnPickImageMain);
         btnPickImageMain.setOnClickListener(v -> {
+            isOpeningInternalScreen = true;
             pickImageLauncher.launch("image/*");
         });
 
@@ -102,6 +115,49 @@ public class MainActivity extends AppCompatActivity {
             b.setLayoutParams(new ViewGroup.LayoutParams(buttonSizePx, buttonSizePx));
             b.setOnClickListener(this::onColorClick);
             grid.addView(b);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isOpeningInternalScreen = false;
+        // Користувач у додатку — зупиняємо сервіс, щоб не слав сповіщення
+        stopService(new Intent(this, DefuseNotificationService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // Якщо користувач вийшов/закрив додаток (не поворот екрану і не перехід у редактор)
+        if (!isChangingConfigurations() && !isOpeningInternalScreen) {
+            startLeaveNotificationService();
+        }
+    }
+
+    private void requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                    REQUEST_POST_NOTIFICATIONS
+            );
+        }
+    }
+
+    private void startLeaveNotificationService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+                ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                        != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        try {
+            Intent serviceIntent = new Intent(this, DefuseNotificationService.class);
+            ContextCompat.startForegroundService(this, serviceIntent);
+        } catch (Exception ignored) {
+            // Захист від обмежень фонового запуску на окремих версіях Android
         }
     }
 
@@ -129,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
             shareIntent.putExtra(Intent.EXTRA_TEXT, textMessage);
         }
 
+        isOpeningInternalScreen = true;
         startActivity(Intent.createChooser(shareIntent, "Надіслати звіт"));
     }
 
